@@ -14,25 +14,35 @@ row_contents = ['participant_id', 'day', 'prompts', 'answers', 'ema']
 
 append_list_as_row('participant_data.csv', row_contents)
 
-participant_id = 1
 
-mu, sigma = 12, 1.2 # mean and standard deviation
-s_prompts = np.random.normal(mu, sigma, 30)
 
-n, p = 10, .8
-s_answers = np.random.binomial(n, p, 30)
+participant_id = 0
 
-ema_options = [0,1]
+while participant_id <= 100:
 
-for i in range(30):
-    p_list = []
+    participant_id += 1
 
-    p_list.append(participant_id)
-    p_list.append(i+1)
-    p_list.append(int(round(s_prompts[i])))
-    p_list.append(s_answers[i])
-    p_list.append(random.choice(ema_options))
+    mu = random.uniform(9, 13)
+    sigma = random.uniform(0.7, 2.1)
+    n = random.randint(5, 12)
+    p = random.uniform(0.2, 0.8)
 
-    append_list_as_row('participant_data.csv', p_list)
+    s_prompts = np.random.normal(mu, sigma, 30)
+
+    
+    s_answers = np.random.binomial(n, p, 30)
+
+    ema_options = [0,1]
+
+    for i in range(30):
+        p_list = []
+
+        p_list.append(participant_id)
+        p_list.append(i+1)
+        p_list.append(int(round(s_prompts[i])))
+        p_list.append(s_answers[i])
+        p_list.append(random.choice(ema_options))
+
+        append_list_as_row('participant_data.csv', p_list)
 
 # print(p_list)

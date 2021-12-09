@@ -1,0 +1,44 @@
+---
+title: "microt_lmer"
+author: "Rithika Lakshminarayanan"
+date: "12/8/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(lattice)
+library(lme4)
+```
+
+## Read participant data
+
+```{r pdata}
+participant_data <- read_csv("participant_data.csv")
+
+# Linear mixed effects model
+
+fit <- lmer(answers ~ prompts*ema + sleep_hours + (1 | participant_id), participant_data)
+
+summary(fit)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+qqnorm(participant_data$answers, pch = 1, frame = FALSE)
+qqline(participant_data$answers, col = "steelblue", lwd = 2)
+```
+
+```{r}
+res = resid(fit)
+plot(participant_data$answers, res, ylab="Residuals", xlab="Prompts answered", main="EMA and uEMA prompts answered") 
+abline(0, 0)  
+```
+
+
+$Y = \mu + \beta_1 sleep + \beta_2 questions + \beta_3 EMA + \beta_{23} questions.EMA + subject + error$
